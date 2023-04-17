@@ -91,7 +91,16 @@ func SignUp() gin.HandlerFunc {
 }
 
 func Login() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cansel = context.WithTimeout(context.Background(), 100*time.Second)
+		defer cansel()
 
+		var user models.User
+		if err := c.BindJSON(&user); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		}
+
+	}
 }
 
 func ProductViewerAdmin() gin.HandlerFunc {
